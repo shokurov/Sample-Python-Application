@@ -16,6 +16,7 @@ from marshall import EventXml
 from google.appengine.api.datastore_errors import BadArgumentError
 from xml.dom import minidom
 
+# These are localhost values and are okay to check into git.
 consumer_key = 'fake-python-isv-307'
 consumer_secret = 'hSZr5yppYjHUYOuS'
 eventUrlTemplate = "http://localhost:8080/AppDirect/rest/api/events/%s";
