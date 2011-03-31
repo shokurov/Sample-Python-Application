@@ -21,6 +21,14 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 from xml.dom import minidom
 
+appDirectLink = "https://www.appdirect.com/purchase/480"
+
+class WelcomeHandler(webapp.RequestHandler):
+    def get(self):
+        path = os.path.join(os.path.dirname(__file__), 'welcome.html')
+        template_values = { 'appDirectLink' : appDirectLink }
+        self.response.out.write(template.render(path, template_values))
+
 class MainHandler(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -45,7 +53,7 @@ class MainHandler(webapp.RequestHandler):
                 self.response.out.write(template.render(path, template_values))
             else:
                 # Send the user to AppDirect to purchase the app
-                self.redirect(logoutUrl)
+                self.redirect(appDirectLink)
         else:
             # Log this user in
             self.redirect(users.create_login_url("https://www.appdirect.com/openid/id"))
@@ -58,8 +66,10 @@ class EventHandler(webapp.RequestHandler):
         self.response.out.write(FetchEvent(self.request.get('token')))
 
 def main():
-    application = webapp.WSGIApplication([('/', MainHandler),
-                                          ('/event', EventHandler)], debug=True)
+    application = webapp.WSGIApplication([('/', WelcomeHandler),\
+                                              ('/main', MainHandler),\
+                                              ('/event', EventHandler)],\
+                                             debug=True)
     util.run_wsgi_app(application)
 
 if __name__ == '__main__':
