@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <h3>Current Subscriptions</h3>
+    <ul>
+    {% for subscription in subscriptions %}
+      <li>{{ subscription.name}}, {{ subscription.edition }}</li>
+    {% endfor %}
+    </ul>
+
+    <h3>Current Users</h3>
+    <ul>
+    {% for user in users %}
+      <li>{{ user.email }}, {{ user.subscription.name }}</li>
+    {% endfor %}
+    </ul>
+    <div><a href="{{ logoutUrl }}">Logout</a></div>
+  </body>
+</html>
